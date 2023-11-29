@@ -3,12 +3,10 @@ import sys
 import ffmpeg
 
 def convert(file: str):
-    path = file.rsplit('\\', 1)[0]
-
-    filename = file.rsplit('\\', 1)[1].rsplit('.',1)[0]
-    filetype = file.rsplit('\\', 1)[1].rsplit('.',1)[1]
-
-    print(f"\033[94mProcessing: {filename}.{filetype}\033[0m")
+    path, filename = os.path.split(file)
+    filename, filetype = filename.rsplit('.', 1)
+    
+    print(f"\033[94mProcessing: {filename}{filetype}\033[0m")
 
     if filetype.lower() in ["mkv", "mov"]:
         # Converts .mkv or .mov to .mp4
@@ -25,11 +23,14 @@ def convert(file: str):
     (
         ffmpeg
         .input(file)
-        .output(path + "\\\\" + filename + dest_filetype)
+        .output(path + dest_filetype)
         .run()
     )
     
 if __name__ == "__main__":
+
+    # If you drag-and-drop a file to the PyInstaller-ed script, 
+    # the paths of the files are added to the arguments.
 
     sys.argv.pop(0)
 
