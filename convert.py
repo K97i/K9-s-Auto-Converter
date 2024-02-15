@@ -15,6 +15,10 @@ def convert(file: str):
     elif filetype.lower() in ["mp3", "m4a"]:
         # Converts .mp3 or .m4a to .wav
         dest_filetype = ".wav"
+        
+    elif filetype.lower() in ["wav"]:
+        # Converts .wav to .mp3 for Discord Sharing
+        dest_filetype = ".mp3"
 
     else:
         print("Not supported!")
